@@ -4,7 +4,7 @@ const mongoose = require('./db/mongoose');
 const bcrypt = require('bcrypt');
 const userRoutes = require('./routes/user-routes');
 const bodyParser = require('body-parser');
-
+const private = require('./routes/private');
 
 app.use(bodyParser.json());
 // let salt = bcrypt.genSaltSync(12);
@@ -22,7 +22,7 @@ app.get('/', (request,response)=>{
 })
 
 app.use('/user', userRoutes);
-
+app.use('/private', private); 
 
 const PORT = 3000
 app.listen(PORT, ()=>{

@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const authenticate = require('../middleware/authenticate');
 
-router.post('/private', authenticate, (req,res)=>{
+router.get('/private', authenticate, (req,res)=>{
     let object = {
         message:'This is a hidden path!!!',
         secret: 'You have been allowed!',

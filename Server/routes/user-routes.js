@@ -3,6 +3,7 @@ const router = express.Router();
 const User = require('../db/models/user-model');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const {secret} = require('../config');
 
 router.post('/register', (req,res)=> {
     console.log('THIS IS THE REGISTER ROUTE');
@@ -39,8 +40,8 @@ router.post('/login', (req,res)=>{
             if(!match) {
                 return res.status(401).send();
             };
-            let token = jwt.sign({_id:user._id}, 'secret');
-            return res.status(201).send({token});
+            let token = jwt.sign({_id:user._id}, secret);
+            return res.status(201).header('x-auth', token).send();
         }).catch(err=>{
             return res.status(401).send({error:err});
         })

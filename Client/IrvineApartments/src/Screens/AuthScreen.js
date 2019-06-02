@@ -10,15 +10,6 @@ const logoWidth = '70%';
 
 export default class App extends React.Component {
 
-  // handlePushScreen = ()=> {
-  //   console.log("PUSH THE SCREEN FUCKER!");
-  //   Navigation.push(this.props.componentId, {
-  //     component: {
-  //       name: 'IrvineApartments.CreateAnAccount',
-  //     }
-  //   });
-  // }
-
   render() {
     return (
       <ImageBackground source = {bgImage} style={styles.backgroundContainer}>
@@ -34,7 +25,6 @@ export default class App extends React.Component {
           </TouchableOpacity>
           <TouchableOpacity 
             onPress={() => {
-              // Alert.alert('You tapped the button!');
               Navigation.push(this.props.componentId, {
                 component: {
                   name: 'IrvineApartments.CreateAnAccount',
@@ -44,7 +34,7 @@ export default class App extends React.Component {
                   options: {
                     topBar: {
                       title: {
-                        text: 'Pushed screen title'
+                        text: 'Sign Up'
                       }
                     }
                   }
@@ -56,7 +46,6 @@ export default class App extends React.Component {
             underlayColor='#fff'>
             <Text style={styles.TextStyle}>Create new account</Text>
           </TouchableOpacity>
-          {/* <Text style={styles.TextStyle}  >Create new account</Text> */}
         </View>
       </ImageBackground>
     );

@@ -1,58 +1,6 @@
-// /**
-//  * Sample React Native App
-//  * https://github.com/facebook/react-native
-//  *
-//  * @format
-//  * @flow
-//  */
-
-// import React, {Component} from 'react';
-// import {Platform, StyleSheet, Text, View} from 'react-native';
-
-// const instructions = Platform.select({
-//   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-//   android:
-//     'Double tap R on your keyboard to reload,\n' +
-//     'Shake or press menu button for dev menu',
-// });
-
-// // type Props = {};
-// // export default class App extends Component<Props> {
-// export default class App extends Component {
-//   render() {
-//     console.log("view rendering????fdsafdsafdafdafds");
-//     return (
-//       <View style={styles.container}>
-//         <Text style={styles.welcome}>Welcome to React Native!</Text>
-//         <Text style={styles.instructions}>To get started, edit App.js</Text>
-//         <Text style={styles.instructions}>{instructions}</Text>
-//       </View>
-//     );
-//   }
-// }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//     backgroundColor: '#F5FCFF',
-//   },
-//   welcome: {
-//     fontSize: 20,
-//     textAlign: 'center',
-//     margin: 10,
-//   },
-//   instructions: {
-//     textAlign: 'center',
-//     color: '#333333',
-//     marginBottom: 5,
-//   },
-// });
-
 import React from 'react';
-import { StyleSheet, Text, TextInput, View, ImageBackground, Image, Button, TouchableHighlight, TouchableOpacity } from 'react-native';
-// import bgImage from '././Images/background.jpg'
+import { Navigation } from 'react-native-navigation';
+import { Alert, StyleSheet, Text, TextInput, View, ImageBackground, Image, Button, TouchableHighlight, TouchableOpacity } from 'react-native';
 import bgImage from './Images/background.jpg'
 import logoImage from './Images/irvine-company-logo.png'
 
@@ -61,6 +9,16 @@ const authHeight = '65%';
 const logoWidth = '70%';
 
 export default class App extends React.Component {
+
+  // handlePushScreen = ()=> {
+  //   console.log("PUSH THE SCREEN FUCKER!");
+  //   Navigation.push(this.props.componentId, {
+  //     component: {
+  //       name: 'IrvineApartments.CreateAnAccount',
+  //     }
+  //   });
+  // }
+
   render() {
     return (
       <ImageBackground source = {bgImage} style={styles.backgroundContainer}>
@@ -74,7 +32,26 @@ export default class App extends React.Component {
             underlayColor='#fff'>
             <Text style={styles.loginText}>SIGN IN</Text>
           </TouchableOpacity>
-          <TouchableOpacity
+          <TouchableOpacity 
+            onPress={() => {
+              // Alert.alert('You tapped the button!');
+              Navigation.push(this.props.componentId, {
+                component: {
+                  name: 'IrvineApartments.CreateAnAccount',
+                  passProps: {
+                    text: 'Pushed screen'
+                  },
+                  options: {
+                    topBar: {
+                      title: {
+                        text: 'Pushed screen title'
+                      }
+                    }
+                  }
+                }
+              });
+
+            }}
             style={styles.createAccountButton}
             underlayColor='#fff'>
             <Text style={styles.TextStyle}>Create new account</Text>

@@ -5,6 +5,7 @@ import bgImage from './Images/background.jpg'
 import logoImage from './Images/irvine-company-logo.png'
 import axios from 'axios'
 import startPrivateApartmentViewing from './StartPrivateApartmentsScreen'
+
 const authWidth = '85%';
 const authHeight = '65%';
 const logoWidth = '70%';
@@ -40,7 +41,24 @@ export default class App extends React.Component {
         username,
         password
       }).then((response)=>{
-        alert("WOHOO OKAY")
+        // alert("WOHOO OKAY")
+        // Navigation.push(this.props.componentId, {
+        //   component: {
+        //     name: 'IrvineApartments.PrivateApartmentsScreen',
+        //     passProps: {
+        //       text: 'Pushed screen'
+        //     },
+        //     options: {
+        //       topBar: {
+        //         title: {
+        //           text: 'Private listings!'
+        //         }
+        //       }
+        //     }
+        //   }
+        // });
+        startPrivateApartmentViewing();
+
       }).catch(()=>{
         alert("Wrong username || password. Please try again");
       })

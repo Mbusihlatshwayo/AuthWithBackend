@@ -3,7 +3,7 @@ import {Navigation} from 'react-native-navigation';
 
 const startPrivateApartmentViewing = ()=>{
 
-    return Navigation.events().registerAppLaunchedListener(() => {
+    // return Navigation.events().registerAppLaunchedListener(() => {
         Navigation.setRoot({
           root: {
             stack: {
@@ -12,7 +12,10 @@ const startPrivateApartmentViewing = ()=>{
                   name: "IrvineApartments.PrivateApartmentsScreen",
                   options: {
                     topBar: {
-                      visible: false
+                      visible: true,
+                      title: {
+                        text: 'Private listings!'
+                      }
                     }
                   }
                 }
@@ -20,7 +23,7 @@ const startPrivateApartmentViewing = ()=>{
             }
           }
         });
-      });
+      // });
 
 }
 

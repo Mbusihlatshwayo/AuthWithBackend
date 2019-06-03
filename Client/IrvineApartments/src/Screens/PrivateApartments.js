@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navigation } from 'react-native-navigation';
 import { AsyncStorage ,Alert, StyleSheet, Text, TextInput, View, ImageBackground, Image, Button, TouchableHighlight, TouchableOpacity } from 'react-native';
-import StartAuthScreen from './startAuthScreen';
+// import StartAuthScreen from './startAuthScreen';
 import startAuthScreen from './startAuthScreen';
 
 const authWidth = '85%';
@@ -12,10 +12,10 @@ export default class App extends React.Component {
 
     handleLogout = ()=>{
         AsyncStorage.removeItem('x-auth').then(()=>{
-            alert('reload now');
+            // alert('reload now');
             return startAuthScreen();
         }).catch(()=> {
-            alert('reload');
+            // alert('reload');
             return startAuthScreen();
         })
     }

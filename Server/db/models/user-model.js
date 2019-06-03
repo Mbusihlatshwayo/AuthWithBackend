@@ -25,7 +25,7 @@ const User = new mongoose.Schema({
     username: {
         type: String,
         required: true,
-        minlength: 8,
+        minlength: 1,
         trim: true,
         unique: true
     }

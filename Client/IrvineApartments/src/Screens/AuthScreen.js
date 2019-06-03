@@ -1,47 +1,85 @@
 import React from 'react';
-import { Navigation } from 'react-native-navigation';
+import { Navigation } from 'react-native-navigation'
 import { Alert, StyleSheet, Text, TextInput, View, ImageBackground, Image, Button, TouchableHighlight, TouchableOpacity } from 'react-native';
 import bgImage from './Images/background.jpg'
 import logoImage from './Images/irvine-company-logo.png'
-
+import axios from 'axios'
+import startPrivateApartmentViewing from './StartPrivateApartmentsScreen'
 const authWidth = '85%';
 const authHeight = '65%';
 const logoWidth = '70%';
 
 export default class App extends React.Component {
 
+  state = {
+    username: '',
+    password: ''
+  }
+
+  handleSignUpPressed = () => {
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'IrvineApartments.CreateAnAccount',
+        passProps: {
+          text: 'Pushed screen'
+        },
+        options: {
+          topBar: {
+            title: {
+              text: 'Sign Up'
+            }
+          }
+        }
+      }
+    });
+  }
+  handleLogin = ()=>{
+    const {username, password} = this.state;
+    if(username && password) {
+      axios.post('http://192.168.50.14:3000/user/login', {
+        username,
+        password
+      }).then((response)=>{
+        alert("WOHOO OKAY")
+      }).catch(()=>{
+        alert("Wrong username || password. Please try again");
+      })
+    } else {
+      alert("Must enter username && password")
+    }
+  }
+
+  handlePasswordChange = password => {
+    this.setState({password});
+  }
+  handleUsernameChange = username => {
+      this.setState({username});
+  }
   render() {
     return (
       <ImageBackground source = {bgImage} style={styles.backgroundContainer}>
         <View style={styles.authenticationContainer}>
           <Image source = {logoImage} style={styles.logoImageView}>
           </Image>
-          <TextInput style={styles.usernameInput} placeholder="Username"/>
-          <TextInput style={styles.passwordInput} placeholder="Password" secureTextEntry/>
+          <TextInput style={styles.usernameInput} 
+            placeholder="Username"
+            onChangeText={this.handleUsernameChange}/>
+          <TextInput style={styles.passwordInput} 
+            placeholder="Password" 
+            secureTextEntry
+            onChangeText={this.handlePasswordChange}/>
           <TouchableOpacity
+            onPress = {
+              this.handleLogin
+            }
             style={styles.loginScreenButton}
             underlayColor='#fff'>
             <Text style={styles.loginText}>SIGN IN</Text>
           </TouchableOpacity>
           <TouchableOpacity 
-            onPress={() => {
-              Navigation.push(this.props.componentId, {
-                component: {
-                  name: 'IrvineApartments.CreateAnAccount',
-                  passProps: {
-                    text: 'Pushed screen'
-                  },
-                  options: {
-                    topBar: {
-                      title: {
-                        text: 'Sign Up'
-                      }
-                    }
-                  }
-                }
-              });
-
-            }}
+            onPress = {
+              this.handleSignUpPressed
+            }
             style={styles.createAccountButton}
             underlayColor='#fff'>
             <Text style={styles.TextStyle}>Create new account</Text>

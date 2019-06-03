@@ -3,6 +3,8 @@ import { Navigation } from 'react-native-navigation';
 import { Alert, StyleSheet, Text, TextInput, View, ImageBackground, Image, Button, TouchableHighlight, TouchableOpacity } from 'react-native';
 import bgImage from './Images/background.jpg'
 import logoImage from './Images/irvine-company-logo.png'
+import Validator from 'validator';
+import axios from 'axios';
 
 const authWidth = '85%';
 const authHeight = '65%';
@@ -10,24 +12,71 @@ const logoWidth = '70%';
 
 export default class App extends React.Component {
 
-  render() {
+    state = {
+        email:'',
+        password:'',
+        username:''
+    };
+
+    handleEmailChange = email => {
+        this.setState({email});
+    };
+    handlePasswordChange = password => {
+        this.setState({password});
+    }
+    handleUsernameChange = username => {
+        this.setState({username});
+    }
+    handleRegister = ()=>{
+      const {email, username, password} = this.state;
+      if(Validator.isEmail(email) && username.trim()) {
+        axios.post('http://192.168.50.14:3000/user/register', {
+          email,
+          password,
+          username
+        }).then((response)=>{
+          if(response.status==201){
+            // TODO: we can just push the user all the way through 
+            Navigation.pop(this.props.componentId);
+          }
+        }).catch(()=>{
+          alert("Unable to register. Please try again");
+        })
+      } else {
+        alert("Invalid email or username")
+      }
+    }
+    render() {
     return (
-      <ImageBackground source = {bgImage} style={styles.backgroundContainer}>
+        <ImageBackground source = {bgImage} style={styles.backgroundContainer}>
         <View style={styles.authenticationContainer}>
-          <Image source = {logoImage} style={styles.logoImageView}>
-          </Image>
-          <TextInput style={styles.emailInput} placeholder="Email"/>
-          <TextInput style={styles.usernameInput} placeholder="Username"/>
-          <TextInput style={styles.passwordInput} placeholder="Password" secureTextEntry/>
-          <TouchableOpacity
+            <Image source = {logoImage} style={styles.logoImageView}>
+            </Image>
+            <TextInput style={styles.emailInput} 
+                placeholder="Email" 
+                value={this.state.email} 
+                onChangeText={this.handleEmailChange}/>
+            <TextInput style={styles.usernameInput} 
+                placeholder="Username"
+                value={this.state.username} 
+                onChangeText={this.handleUsernameChange}/>
+            <TextInput style={styles.passwordInput} 
+                placeholder="Password" 
+                value={this.state.password} 
+                secureTextEntry
+                onChangeText={this.handlePasswordChange}/>
+            <TouchableOpacity
+            onPress = {
+              this.handleRegister
+            }
             style={styles.loginScreenButton}
             underlayColor='#fff'>
             <Text style={styles.loginText}>CREATE ACCOUNT</Text>
-          </TouchableOpacity>
+            </TouchableOpacity>
         </View>
-      </ImageBackground>
+        </ImageBackground>
     );
-  }
+    }
 }
 
 const styles = StyleSheet.create({

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Navigation } from 'react-native-navigation'
-import { Alert, StyleSheet, Text, TextInput, View, ImageBackground, Image, Button, TouchableHighlight, TouchableOpacity } from 'react-native';
+import { AsyncStorage, Alert, StyleSheet, Text, TextInput, View, ImageBackground, Image, Button, TouchableHighlight, TouchableOpacity } from 'react-native';
 import bgImage from './Images/background.jpg'
 import logoImage from './Images/irvine-company-logo.png'
 import axios from 'axios'
@@ -41,23 +41,19 @@ export default class App extends React.Component {
         username,
         password
       }).then((response)=>{
-        // alert("WOHOO OKAY")
-        // Navigation.push(this.props.componentId, {
-        //   component: {
-        //     name: 'IrvineApartments.PrivateApartmentsScreen',
-        //     passProps: {
-        //       text: 'Pushed screen'
-        //     },
-        //     options: {
-        //       topBar: {
-        //         title: {
-        //           text: 'Private listings!'
-        //         }
-        //       }
-        //     }
-        //   }
-        // });
-        startPrivateApartmentViewing();
+        try {
+          const token = response.headers['x-auth'];
+          if (token) {
+            AsyncStorage.setItem('x-auth', token).then(()=>{
+              startPrivateApartmentViewing();
+            }).catch(()=> {
+              alert('Sorry, an error has occured')
+            })
+          } 
+        } catch {
+          alert('sorry, we ran into some issues')  
+        }
+        
 
       }).catch(()=>{
         alert("Wrong username || password. Please try again");

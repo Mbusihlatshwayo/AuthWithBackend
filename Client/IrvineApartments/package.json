@@ -11,7 +11,7 @@
     "react": "16.8.3",
     "react-native": "0.59.8",
     "react-native-navigation": "^2.21.0",
-    "validator": "^11.0.0"
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "@babel/core": "7.4.5",
